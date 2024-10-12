@@ -8,7 +8,7 @@ import Registration from './pages/Registration';
 import Homing from './pages/Homing';
 import Login from './pages/Login';
 import Todo from './pages/Todo';
-
+import Notes from './pages/Notes';
 function App() {
 
   return (
@@ -21,6 +21,7 @@ function App() {
           <Route path="/registration" element={<Registration />} />
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NoPage />} />
+          <Route path="/notes" element={<Notes />} />
         </Route>
       </Routes>
     </BrowserRouter>
