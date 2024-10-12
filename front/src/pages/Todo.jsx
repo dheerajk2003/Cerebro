@@ -15,9 +15,11 @@ function Todo() {
     const handleAddTask = (e) => {
         e.preventDefault();
 
-        fetch('http://localhost:3000/createTask', {
+        fetch(`http://localhost:3000/createTask`, {
             method: 'POST',
-            body: JSON.stringify({ task_name:task })
+            mode: 'no-cors',
+            // body: JSON.stringify({ "task_name" :task })
+            body: new URLSearchParams({ task_name: task }).toString(),
         });
 
         getTodos();
@@ -30,13 +32,13 @@ function Todo() {
     };
 
     const getCompletedTasks = () => {
-        fetch('http://localhost:3000/getTasks?type=${1}')
+        fetch('http://localhost:3000/getTasks?type=${1}', {mode: 'no-cors'})
             .then(response => response.json())
-            .then(data => setCompletedTasks(data));
+            .then(data => {setCompletedTasks(data); console.log(data)});
     };
 
     const getTodos = () => {
-        fetch('http://localhost:3000/getTasks')
+        fetch('http://localhost:3000/getTasks', {mode: 'no-cors'})
             .then(response => response.json())
             .then(data => setTodos(data));
     };
@@ -55,8 +57,9 @@ function Todo() {
 
     const handleDeleteTask = (index) => {
 
-        fetch(`http://localhost:3000/deleteTask?id=${index}}`, {
-            method: 'DELETE'
+        fetch(`http://localhost:3000/deleteTask?id=${index}} `, {
+            method: 'DELETE',
+            mode: 'no-cors'
         });
 
         setCompletedTasks(completedTasks.filter((_, i) => i !== index));
