@@ -55,8 +55,9 @@ export default function Login() {
     }
 
     return (
-        <div className="flex justify-center items-center h-screen">
-            <form class="max-w-72 min-w-96 mx-auto" onSubmit={handleSubmit}>
+        <div className="flex justify-center items-center h-screen bg-gray-100">
+            <form class="w-2/6 mx-auto bg-white px-48 py-24 shadow-md rounded-lg" onSubmit={handleSubmit}>
+                <h1 className="text-2xl font-bold text-center mb-12">Login</h1>
                 <div class="mb-5">
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
                     <input onChange={(e) => handleChange(e)} type="email" id="email" name="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required />

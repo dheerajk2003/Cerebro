@@ -16,21 +16,28 @@ function Todo() {
         if(localStorage.getItem("token") == null){
             navigate("/login");
         }
-        getTodos();
-        getCompletedTasks();
+        // getTodos();
+        // getCompletedTasks();
     }, []);
 
     const handleAddTask = (e) => {
         e.preventDefault();
         
-        // if (task.trim() !== '') {
-            // setTodos([...todos, task]);
-            // setTask('');
-        // }
+        if (task.trim() !== '') {
+            setTodos([...todos, task]);
+            setTask('');
+        }
 
-        fetch(`http://localhost:3000/createTask?task_name=${task}&id=${localStorage.getItem("token")}`, {
-            method: 'POST'
+        fetch(`http://localhost:3000/createTask?task_name=${encodeURIComponent(task)}&id=${encodeURIComponent(localStorage.getItem("token"))}`, {
+            method: 'POST',
         })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     };
 
     const getCompletedTasks = () => {
