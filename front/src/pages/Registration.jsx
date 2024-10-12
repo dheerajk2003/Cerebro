@@ -61,7 +61,7 @@ export default function Registration() {
 
     return (
         <div className="flex justify-center items-center h-screen">
-            <form class="max-w-sm mx-auto" onSubmit={handleSubmit}>
+            <form class="max-w-72 min-w-96 mx-auto" onSubmit={handleSubmit}>
                 <div class="mb-5">
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label>
                     <input onChange={(e) => handleChange(e)} type="text" id="name" name="name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name sirname" required />
@@ -72,7 +72,7 @@ export default function Registration() {
                 </div>
                 <div class="mb-5">
                     <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                    <input onChange={(e) => handleChange(e)} type="password" id="password" name="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
+                    <input placeholder="password" onChange={(e) => handleChange(e)} type="password" id="password" name="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
                 </div>
                 {/* <div class="mb-5">
                     <label for="repeat-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat password</label>
@@ -84,7 +84,7 @@ export default function Registration() {
                     </div> */}
                     <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Already registered? <Link to="/login" class="text-red-600 hover:underline dark:text-red-700">Login Now</Link></label>
                 </div>
-                <button type="submit" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Register new account</button>
+                <button type="submit" class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Register new account</button>
 
 
 

@@ -45,8 +45,8 @@ function Notes() {
     return (
         <div className="relative h-screen flex flex-col items-center justify-end bg-gray-100">
             {/* Large div above the input */}
-            <div className="absolute top-0 w-full h-3/4 bg-gray-300 flex items-start justify-center mx-48 m-24">
-                <p className="text-2xl font-bold text-black">{responseValue}</p>
+            <div className="absolute top-0 w-3/4 h-3/4 bg-gray-300 flex items-start justify-center mx-48 m-20">
+                <p className="text-2xl font-bold text-black mt-10">{responseValue} Hi i am your Ai Asistant how can i help you today.</p>
             </div>
 
             {/* Input and submit button at the bottom center */}
