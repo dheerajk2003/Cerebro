@@ -21,22 +21,33 @@ export default function Login() {
     async function handleSubmit(e) {
         e.preventDefault();
         console.log(formData);
-        let mydata = new FormData(e.target);
+        // let mydata = new FormData(e.target);
         try {
-            let response = await fetch('http://127.0.0.1:3000/register', {
+            let response = await fetch('http://localhost:3000/login', {
                 method: 'POST',
-                mode: 'no-cors',
-                body: mydata
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: formData.email,
+                    password: formData.password
+                })
             })
             let data = await response.json();
 
-            console.log(data.error);
+            console.log(data.token);
+
+            if(data.token != null){
+                localStorage.setItem("token", data.token);
+            }
 
             if (response.ok) {
                 console.log('Registration successful');
             } else {
                 console.error('Registration failed');
             }
+
+            alert("Login Successfull, 200");
 
         } catch (error) {
             console.error('Error during registration:', error);
@@ -60,7 +71,7 @@ export default function Login() {
                     </div> */}
                     <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Not a User? <Link to="/registration" class="text-red-600 hover:underline dark:text-red-700">Register Now</Link></label>
                 </div>
-                <button type="submit" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Register new account</button>
+                <button type="submit" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Login into account</button>
 
                 
 

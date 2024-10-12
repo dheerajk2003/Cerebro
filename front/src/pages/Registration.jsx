@@ -11,8 +11,7 @@ export default function Registration() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        password: '',
-        repeatPassword: ''
+        password: ''
     });
 
     function handleChange(e) {
@@ -25,20 +24,27 @@ export default function Registration() {
         e.preventDefault();
         console.log(formData);
         try {
-            let mydata = new FormData(e.target);
+            // let mydata = new FormData(formData);
 
             let response = await fetch('http://localhost:3000/register', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/json',
                 },
-                mode: 'no-cors',
-                body: mydata
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    password: formData.password
+                })
             })
 
             let data = await response.json();
 
-            console.log(data.error);
+            if(data.token != null){
+                localStorage.setItem("token", data.token);
+            }
+
+            console.log(data.token);
 
             if (response.ok) {
                 console.log('Registration successful');
