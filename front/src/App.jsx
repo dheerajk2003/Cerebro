@@ -9,6 +9,7 @@ import Homing from './pages/Homing';
 import Login from './pages/Login';
 import Todo from './pages/Todo';
 import Notes from './pages/Notes';
+import WallOfFame from './pages/WallOfFame';
 function App() {
 
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NoPage />} />
           <Route path="/notes" element={<Notes />} />
+          <Route path="/walloffame" element={<WallOfFame />} />
         </Route>
       </Routes>
     </BrowserRouter>

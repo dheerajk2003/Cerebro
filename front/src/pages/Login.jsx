@@ -1,8 +1,10 @@
 import { Form, Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Login() {
+    const navigate = useNavigate();
     // const [name, setName] = useState('');
     // const [email, setEmail] = useState('');
     // const [password, setPassword] = useState('');
@@ -39,15 +41,8 @@ export default function Login() {
 
             if(data.token != null){
                 localStorage.setItem("token", data.token);
+                navigate("/todo")
             }
-
-            if (response.ok) {
-                console.log('Registration successful');
-            } else {
-                console.error('Registration failed');
-            }
-
-            alert("Login Successfull, 200");
 
         } catch (error) {
             console.error('Error during registration:', error);

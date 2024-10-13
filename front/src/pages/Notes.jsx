@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Notes() {
     const [inputValue, setInputValue] = useState('');
     const [responseValue, setResponseValue] = useState('');
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
     };
+
+    useEffect(() => {
+        if (!localStorage.getItem('token')) {
+            navigate('/login');
+        }
+    }, []);
 
     async function handleSubmit(e) {
         e.preventDefault();
