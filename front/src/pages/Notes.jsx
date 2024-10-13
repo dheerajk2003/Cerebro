@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import scroll from '../assets/AkatsukiLogo.png';
 
 function Notes() {
     const [inputValue, setInputValue] = useState('');
     const [responseValue, setResponseValue] = useState('');
     const [btnState, setBtnState] = useState(false);
+    const [file, setFile] = useState(null);
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -16,6 +18,11 @@ function Notes() {
             navigate('/login');
         }
     }, []);
+
+    async function handleFileChange(e){
+        // console.log(e.target.files[0]);
+        setFile(e.target.files[0]);
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -37,7 +44,7 @@ function Notes() {
             let data = await response.json();
 
             if(data.response != null){
-                setResponseValue(data.response);
+                setResponseValue([...responseValue, data.response]);
             }
 
             console.log(data.token);
@@ -46,6 +53,27 @@ function Notes() {
                 console.log('Registration successful');
             } else {
                 console.error('Registration failed');
+            }
+
+            if(file != null){
+                try{
+                    const formData = new FormData();
+                    formData.append('file', file);
+
+                    const response = await fetch('http://localhost:3000/uploadFile', {
+                        method: 'POST',
+                        body: formData
+                    })
+
+                    const data = await response.json();
+
+                    console.log(data);
+
+                    setResponseValue([...responseValue, data.response]);
+                }
+                catch(error){
+                    console.error('Error during file upload:', error);
+                }
             }
 
             setBtnState(false);
@@ -66,6 +94,10 @@ function Notes() {
             <form
                 onSubmit={handleSubmit}
                 className="absolute bottom-0 mb-8 flex items-center justify-center">
+                <div className='w-24 h-12 relative'>
+                    <input type="file" onChange={handleFileChange} name="" id="" className='block w-24 h-12 opacity-0 z-10 absolute' placeholder='File'/>
+                    <img src={scroll} alt="" className='w-24 h-12 z-0 absolute cursor-pointer hover:shadow-lg'/>
+                </div>
                 <input
                     type="text"
                     value={inputValue}

@@ -1,4 +1,4 @@
-import logo from '../assets/AkatsukiLogo.png';
+import logo from '../assets/akats.png';
 import eye from '../assets/eye.png';
 import hidan from '../assets/hidan.png';
 import { useState, useEffect } from 'react';
