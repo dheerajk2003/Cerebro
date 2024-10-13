@@ -16,17 +16,17 @@ function Todo() {
         if(localStorage.getItem("token") == null){
             navigate("/login");
         }
-        // getTodos();
-        // getCompletedTasks();
+        getTodos();
+        getCompletedTasks();
     }, []);
 
     const handleAddTask = (e) => {
         e.preventDefault();
         
-        if (task.trim() !== '') {
-            setTodos([...todos, task]);
-            setTask('');
-        }
+        // if (task.trim() !== '') {
+        //     setTodos([...todos, task]);
+        //     setTask('');
+        // }
 
         fetch(`http://localhost:3000/createTask?task_name=${encodeURIComponent(task)}&id=${encodeURIComponent(localStorage.getItem("token"))}`, {
             method: 'POST',
@@ -38,23 +38,26 @@ function Todo() {
         .catch(error => {
             console.error('Error:', error);
         });
+        getTodos();
+        getCompletedTasks();
     };
 
     const getCompletedTasks = () => {
-        fetch('http://localhost:3000/getTasks?type=1')
+        fetch(`http://localhost:3000/getTasks?id=${localStorage.getItem("token")}&type=1`)
             .then(response => response.json())
             .then(data => {
                 // Ensure data is an array
-                setCompletedTasks(Array.isArray(data) ? data : []);
+                setCompletedTasks(data.tasks);
+                console.log(data);
             })
             .catch(error => {
                 console.error('Error fetching completed tasks:', error);
-                setCompletedTasks([]);
+                // setCompletedTasks([]);
             });
     };
 
     const getTodos = () => {
-        fetch('http://localhost:3000/getTasks')
+        fetch(`http://localhost:3000/getTasks?id=${localStorage.getItem("token")}`)
             .then(response => response.json())
             .then(data => {
                 // Ensure data is an array
@@ -70,16 +73,20 @@ function Todo() {
     const handleCompleteTask = (index) => {
 
 
-        fetch(`http://localhost:3000/updateTask?id=${index}&completed=true`, {
-            method: 'PUT'
+        fetch(`http://localhost:3000/updateTask?task_id=${index}&completed=1&id=${localStorage.getItem("token")}`, {
+            method: 'PATCH'
         });
 
-        const completedTask = todos[index];
-        setCompletedTasks([...completedTasks, completedTask]);
-        setTodos(todos.filter((_, i) => i !== index));
-        setTimeout(() => {
-            alert("One Reward Recieved");
-        }, 300);
+        // const completedTask = todos[index];
+        // setCompletedTasks([...completedTasks, completedTask]);
+        // setTodos(todos.filter((_, i) => i !== index));
+        getTodos();
+        getCompletedTasks();
+
+        // setTimeout(() => {
+        //     alert("One Reward Recieved");
+        // }, 300);
+        
     };
 
     const handleDeleteTask = (index) => {
@@ -88,7 +95,10 @@ function Todo() {
             method: 'DELETE'
         });
 
-        setCompletedTasks(completedTasks.filter((_, i) => i !== index));
+        getTodos();
+        getCompletedTasks();
+
+        // setCompletedTasks(completedTasks.filter((_, i) => i !== index));
         // setTodos(todos.filter((_, i) => i !== index));
     };
 
@@ -108,8 +118,8 @@ function Todo() {
                         ) : (
                             <ul>
                                 {completedTasks.map((task) => (
-                                    <li key={task.id} className="text-green-600">
-                                        {task.name}
+                                    <li key={task.id} className="flex justify-between items-center">
+                                        <p>{task.name}</p>
                                         <div>
                                             <button onClick={() => handleDeleteTask(task.id)} className="text-xs text-white bg-red-500 px-2 py-1 rounded-md hover:bg-red-600">Delete</button>
                                         </div>
@@ -137,7 +147,7 @@ function Todo() {
                                         <button onClick={() => handleCompleteTask(task.id)} className="text-xs text-white bg-green-500 px-2 py-1 rounded-md hover:bg-green-600">
                                             Complete
                                             </button>
-                                            <button onClick={() => DeleteTask(task.id)} className="text-xs text-white bg-red-500 px-2 py-1 rounded-md hover:bg-red-600">
+                                            <button onClick={() => handleDeleteTask(task.id)} className="text-xs text-white bg-red-500 px-2 py-1 rounded-md hover:bg-red-600">
                                                 Delete
                                             </button>
                                         </div>
