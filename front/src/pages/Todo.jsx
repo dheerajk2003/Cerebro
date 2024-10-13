@@ -7,6 +7,7 @@ function Todo() {
     const [task, setTask] = useState('');
     const [todos, setTodos] = useState([]);
     const [completedTasks, setCompletedTasks] = useState([]);
+    const [temp, setTemp] = useState();
 
     console.log(todos);
     console.log(completedTasks);
@@ -42,8 +43,8 @@ function Todo() {
         getCompletedTasks();
     };
 
-    const getCompletedTasks = () => {
-        fetch(`http://localhost:3000/getTasks?id=${localStorage.getItem("token")}&type=1`)
+    const getCompletedTasks = async () => {
+        await fetch(`http://localhost:3000/getTasks?id=${localStorage.getItem("token")}&type=1`)
             .then(response => response.json())
             .then(data => {
                 // Ensure data is an array
@@ -56,8 +57,8 @@ function Todo() {
             });
     };
 
-    const getTodos = () => {
-        fetch(`http://localhost:3000/getTasks?id=${localStorage.getItem("token")}`)
+    const getTodos = async () => {
+        await fetch(`http://localhost:3000/getTasks?id=${localStorage.getItem("token")}`)
             .then(response => response.json())
             .then(data => {
                 // Ensure data is an array
@@ -70,18 +71,18 @@ function Todo() {
             });
     };
 
-    const handleCompleteTask = (index) => {
+    const handleCompleteTask = async (index) => {
 
 
-        fetch(`http://localhost:3000/updateTask?task_id=${index}&completed=1&id=${localStorage.getItem("token")}`, {
+        await fetch(`http://localhost:3000/updateTask?task_id=${index}&completed=1&id=${localStorage.getItem("token")}`, {
             method: 'PATCH'
         });
 
         // const completedTask = todos[index];
         // setCompletedTasks([...completedTasks, completedTask]);
         // setTodos(todos.filter((_, i) => i !== index));
-        getTodos();
-        getCompletedTasks();
+        await getTodos();
+        await getCompletedTasks();
 
         // setTimeout(() => {
         //     alert("One Reward Recieved");
@@ -89,22 +90,22 @@ function Todo() {
         
     };
 
-    const handleDeleteTask = (index) => {
+    const handleDeleteTask = async (index) => {
 
-        fetch(`http://localhost:3000/deleteTask?id=${index}} `, {
+        await fetch(`http://localhost:3000/deleteTask?id=${index}`, {
             method: 'DELETE'
         });
 
-        getTodos();
-        getCompletedTasks();
+        await getTodos();
+        await getCompletedTasks();
 
         // setCompletedTasks(completedTasks.filter((_, i) => i !== index));
         // setTodos(todos.filter((_, i) => i !== index));
     };
 
-    const DeleteTask = (index) => {
-        setTodos(todos.filter((_, i) => i !== index));
-    }
+    // const DeleteTask = (index) => {
+    //     setTodos(todos.filter((_, i) => i !== index));
+    // }
 
     return (
         <div className="h-screen bg-gray-100 flex flex-col p-24 items-center ">
@@ -113,12 +114,11 @@ function Todo() {
                 <div className="w-2/5 h-4/5 bg-white shadow-md rounded-lg p-4 mr-4 flex flex-col">
                     <h2 className="text-lg font-semibold mb-2">Completed Tasks</h2>
                     <div className="flex-grow">
-                        {completedTasks.length === 0 ? (
-                            <p className="text-gray-500">No completed tasks yet.</p>
-                        ) : (
+                        {completedTasks != null &&completedTasks.length >= 0 ? 
+                        (
                             <ul>
                                 {completedTasks.map((task) => (
-                                    <li key={task.id} className="flex justify-between items-center">
+                                    <li key={task.id} className="flex justify-between items-center m-2 bg-gray-100 p-2 rounded-md">
                                         <p>{task.name}</p>
                                         <div>
                                             <button onClick={() => handleDeleteTask(task.id)} className="text-xs text-white bg-red-500 px-2 py-1 rounded-md hover:bg-red-600">Delete</button>
@@ -126,6 +126,8 @@ function Todo() {
                                     </li>
                                 ))}
                             </ul>
+                        ):(
+                            <p className="text-gray-500">No completed tasks yet.</p>
                         )}
                     </div>
                 </div>
@@ -140,7 +142,7 @@ function Todo() {
                                 {todos.map((task) => (
                                     <li
                                         key={task.id}
-                                        className="flex justify-between items-center mb-2"
+                                        className="flex justify-between items-center m-2 bg-gray-100 p-2 rounded-md"
                                     >
                                         {task.name}
                                         <div>
