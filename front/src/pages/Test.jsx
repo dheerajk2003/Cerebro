@@ -48,7 +48,7 @@ export default function Test(){
     }
 
     return (
-        <div className="flex justify-start items-center gap-5 h-screen bg-gray-100">
+        <div className="flex justify-start items-center gap-5 h-screen bg-gray-100 mt-16">
             {/* Container for the form */}
             <div className="w-1/3 p-8 bg-white shadow-md rounded-lg">
                 <form onSubmit={handleSubmit}>
