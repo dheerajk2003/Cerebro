@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import scroll from '../assets/AkatsukiLogo.png';
+import itach2 from '../assets/itachi2.webp';
 
 function Notes() {
     const [inputValue, setInputValue] = useState('');
@@ -85,6 +86,7 @@ function Notes() {
 
     return (
         <div className="relative h-screen flex flex-col items-center justify-end bg-gray-100">
+            {/* <img src={itach2} alt="" className='fade-in-bounce absolute w-1/5 left-0 top-48'/> */}
             {/* Large div above the input */}
             <div className="absolute top-12 w-3/5 h-3/4 bg-white flex items-start justify-center shadow-md rounded-lg mx-48 m-20">
                 <p className="text-2xl font-bold text-black mt-10">{(responseValue != null && responseValue != "") ? responseValue : "Hi i am your Ai Asistant how can i help you today."}</p>
@@ -94,10 +96,10 @@ function Notes() {
             <form
                 onSubmit={handleSubmit}
                 className="absolute bottom-0 mb-8 flex items-center justify-center">
-                <div className='w-24 h-12 relative'>
+                {/* <div className='w-24 h-12 relative'>
                     <input type="file" onChange={handleFileChange} name="" id="" className='block w-24 h-12 opacity-0 z-10 absolute' placeholder='File'/>
                     <img src={scroll} alt="" className='w-24 h-12 z-0 absolute cursor-pointer hover:shadow-lg'/>
-                </div>
+                </div> */}
                 <input
                     type="text"
                     value={inputValue}

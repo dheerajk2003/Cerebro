@@ -5,7 +5,16 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {animation: {
+      'fade-in-bounce': 'fadeInBounce 2s ease-out forwards',
+    },
+    keyframes: {
+      fadeInBounce: {
+        '0%': { opacity: 0, transform: 'translateY(-20px)' },
+        '50%': { opacity: 0.5, transform: 'translateY(10px)' },
+        '100%': { opacity: 1, transform: 'translateY(0)' },
+      },
+    },},
   },
   plugins: [],
 }
