@@ -4,6 +4,8 @@ export default function Test(){
     const [inputOne, setInputOne] = useState('');
     const [inputTwo, setInputTwo] = useState('');
     const [questionCount, setQuestionCount] = useState(1);
+    const [btnState, setBtnState] = useState(false);
+
     const [result, setResult] = useState([
         {
             question: 'What is the capital of France?',
@@ -28,15 +30,19 @@ export default function Test(){
 
     async function handleSubmit(e){
         e.preventDefault();
-        const response = await fetch('http://localhost:3000/test', {
+        setBtnState(true);
+
+        const response = await fetch('http://localhost:3000/createTest', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({topic: inputOne, subtopic: inputTwo, token: localStorage.getItem('token'), subject: inputOne, questioncount: questionCount})
+            body: JSON.stringify({topic: inputOne, subtopic: inputTwo, token: localStorage.getItem('token'), subject: inputOne, questionCount: questionCount})
         })
         const data = await response.json();
         setResult(data);
+        setBtnState(false);
+
         console.log(data);
 
     }
@@ -72,7 +78,7 @@ export default function Test(){
                         />
                     </div>
 
-                    <div className="mb-4">
+                    {/* <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="inputTwo">
                             Question Count
                         </label>
@@ -85,8 +91,8 @@ export default function Test(){
                             max={5}
                             min={1}
                         />
-                    </div>
-                    <button type="submit" className="w-full bg-red-700 text-white px-4 py-2 rounded-lg">Submit</button>
+                    </div> */}
+                    <button type="submit" style={{backgroundColor: btnState ? "#ccc" : "#cc0000"}} className="w-full bg-red-700 text-white px-4 py-2 rounded-lg">Submit</button>
                 </form>
             </div>
             <div>
@@ -95,7 +101,9 @@ export default function Test(){
 
             {/* Right side - Questions */}
             <div className="w-2/3 h-8/10 p-8 bg-white shadow-md rounded-lg overflow-y-scroll">
-                {result.map((item, index) => (
+                
+                { (result.map != null && result.length > 0) ?
+                (result.map((item, index) => (
                     <div
                         key={index}
                         className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg"
@@ -128,7 +136,7 @@ export default function Test(){
                             <strong>Answer:</strong> {item.answer}
                         </p>
                     </div>
-                ))}
+                ))): <p>No questions found</p>}
             </div>
         
         </div>

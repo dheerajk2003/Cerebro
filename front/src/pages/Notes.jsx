@@ -46,6 +46,7 @@ function Notes() {
 
             if(data.response != null){
                 setResponseValue([...responseValue, data.response]);
+                setResponseValue([...responseValue, "<br/><br/>"]);
             }
 
             console.log(data.token);

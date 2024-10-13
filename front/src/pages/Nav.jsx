@@ -5,12 +5,28 @@ import mute from "../assets/mute.png"
 import unmute from "../assets/unmute.png"
 import music from "../assets/music.mp3"
 import { useRef } from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function Nav() {
 
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
+
+    const [seconds, setSeconds] = useState(0);
+
+    useEffect(() => {
+        // Increment the timer every second
+        const interval = setInterval(() => {
+            setSeconds((prevSeconds) => prevSeconds + 1);
+        }, 1000);
+
+        // Cleanup the interval on component unmount
+        return () => clearInterval(interval);
+    }, []);
+
+    // Calculate hours and minutes from the total seconds
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
 
     const handlePlayPause = () => {
         if (isPlaying) {
@@ -71,6 +87,11 @@ export default function Nav() {
                             >
                                 {isPlaying ? <img src={unmute} className="h-6" /> : <img src={mute} className="h-6" />}
                             </button>
+                        </div>
+                        <div className="flex justify-center items-center h-16">
+                            <div className="text-xl font-bold text-red-800">
+                                {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}
+                            </div>
                         </div>
                     </div>
                     <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
