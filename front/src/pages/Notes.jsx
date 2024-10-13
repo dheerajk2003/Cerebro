@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function Notes() {
     const [inputValue, setInputValue] = useState('');
     const [responseValue, setResponseValue] = useState('');
+    const [btnState, setBtnState] = useState(false);
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -20,6 +21,8 @@ function Notes() {
         e.preventDefault();
         try {
             // let mydata = new FormData(formData);
+
+            setBtnState(true);
 
             let response = await fetch('http://localhost:3000/askAI', {
                 method: 'POST',
@@ -44,6 +47,8 @@ function Notes() {
             } else {
                 console.error('Registration failed');
             }
+
+            setBtnState(false);
 
         } catch (error) {
             console.error('Error during registration:', error);
@@ -70,6 +75,8 @@ function Notes() {
                 />
                 <button
                     type="submit"
+                    style={{backgroundColor: btnState ? "#ccc" : "#cc0000"}}
+                    disabled={btnState}
                     className="p-4 px-6 bg-red-500 text-white rounded-r hover:bg-red-600"
                 >
                     Submit

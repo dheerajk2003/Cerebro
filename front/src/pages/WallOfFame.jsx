@@ -1,5 +1,6 @@
 import logo from '../assets/AkatsukiLogo.png';
 import eye from '../assets/eye.png';
+import hidan from '../assets/hidan.png';
 import { useState, useEffect } from 'react';
 
 export default function WallOfFame() {
@@ -38,7 +39,7 @@ export default function WallOfFame() {
                                 {/* Profile Picture */}
                                 {index+1}
                                 <img
-                                    src=""
+                                    src={hidan}
                                     alt=""
                                     className="w-10 h-10 rounded-full ml-2"
                                 />

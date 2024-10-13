@@ -21,7 +21,7 @@ function Todo() {
         getCompletedTasks();
     }, []);
 
-    const handleAddTask = (e) => {
+    const handleAddTask = async(e) => {
         e.preventDefault();
         
         // if (task.trim() !== '') {
@@ -29,7 +29,7 @@ function Todo() {
         //     setTask('');
         // }
 
-        fetch(`http://localhost:3000/createTask?task_name=${encodeURIComponent(task)}&id=${encodeURIComponent(localStorage.getItem("token"))}`, {
+        await fetch(`http://localhost:3000/createTask?task_name=${encodeURIComponent(task)}&id=${encodeURIComponent(localStorage.getItem("token"))}`, {
             method: 'POST',
         })
         .then(response => response.json())
@@ -39,8 +39,10 @@ function Todo() {
         .catch(error => {
             console.error('Error:', error);
         });
-        getTodos();
-        getCompletedTasks();
+        await getTodos();
+        await getCompletedTasks();
+        setTask('');
+
     };
 
     const getCompletedTasks = async () => {
